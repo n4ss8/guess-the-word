@@ -74,7 +74,26 @@ const updateWordInProgress = function (guessedLetters) {
     wordInProgress.innerText = showWord.join("");
     checkWin();
 };
-const checkWin = function () {
+
+const updateGuessesRemaining = function (guess) {
+    const upperWord = word.toUpperCase();
+    if (!upperWord.includes(guess)) {
+      message.innerText = `Nope! The word has no ${guess}.`;
+      remainingGuesses -= 1;
+    } else {
+      message.innerText = `Yes! The word has the letter ${guess}.`;
+    }
+  
+    if (remainingGuesses === 0) {
+      message.innerHTML = `Game over! The word is <span class="highlight">${word}</span>.`;
+    } else if (remainingGuesses === 1) {
+      remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
+    } else {
+      remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
+    }
+  };
+  
+  const checkWin = function () {
     if (word.toUpperCase() === wordInProgress.innerText) {
         message.classList.add("win");
         message.innerHTML = `<p class="highlight">You guessed the word correct! yay!</p>`;
